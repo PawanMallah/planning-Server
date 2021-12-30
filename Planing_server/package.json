@@ -8,7 +8,7 @@
   "scripts": {
     "start": "node index.js",
    
-    "build": "npm build --prod",
+    "build": "npm build --prod"
    
   },
   "dependencies": {
