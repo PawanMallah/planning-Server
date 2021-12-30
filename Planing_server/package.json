@@ -7,11 +7,9 @@
   "author": "Microsoft",
   "scripts": {
     "start": "node index.js",
-    "ng": "ng",
-    "build": "ng build --prod",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+   
+    "build": "npm build --prod",
+   
   },
   "dependencies": {
     "collections": "^5.1.11",
