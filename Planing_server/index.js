@@ -88,7 +88,7 @@ io.on('connection',function(socket)
     });
 });
 
-const port = process.env.PORT || 1337;
+const port = process.env.PORT || 80;
 server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
