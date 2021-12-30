@@ -1,0 +1,30 @@
+{
+  "name": "app-service-hello-world",
+  "description": "Simple Hello World Node.js sample for Azure App Service",
+  "version": "0.0.1",
+  "private": true,
+  "license": "MIT",
+  "author": "Microsoft",
+  "scripts": {
+    "start": "node index.js",
+    "ng": "ng",
+    "build": "ng build --prod",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
+  },
+  "dependencies": {
+    "collections": "^5.1.11",
+    "socket.io": "^2.3.0"
+  },
+  "main": "index.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Azure-Samples/nodejs-docs-hello-world.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Azure-Samples/nodejs-docs-hello-world/issues"
+  },
+  "homepage": "https://github.com/Azure-Samples/nodejs-docs-hello-world#readme"
+}
