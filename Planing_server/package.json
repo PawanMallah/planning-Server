@@ -6,9 +6,7 @@
   "license": "MIT",
   "author": "Microsoft",
   "scripts": {
-    "start": "node index.js",
-   
-    "build": "npm build --prod"
+    "start": "node index.js"
    
   },
   "dependencies": {
