@@ -1,7 +1,9 @@
 const http = require('http');
 var List = require("collections/list");
+
+const port = process.env.PORT || 80;
 const server = http.createServer((request, response) => {
-    response.end("Hello World!");
+    response.end("Hello World! port "+port);
 });
 
 var io  = require('socket.io')(server);
@@ -88,7 +90,6 @@ io.on('connection',function(socket)
     });
 });
 
-const port = process.env.PORT || 80;
 server.listen(port);
 
 console.log("Server running at http://localhost:%d", port);
