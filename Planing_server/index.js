@@ -4,6 +4,7 @@ var List = require("collections/list");
 const port = process.env.PORT || 8080;
 const server = http.createServer((request, response) => {
     response.end("Pawan Mallah Port ");
+    
 });
 
 var io  = require('socket.io')(server);
@@ -14,12 +15,21 @@ io.on('connection',function(socket)
     //console.log(socket.id);
     socket.on('join',function(data){
         var list1 =[];
+		var isUserExist = false;
         socket.join(data.RoomId);
         otherData=list[data.RoomId];
         for (var otherRoomCode in otherData) {
+			if(otherData[otherRoomCode].Name == data.Name)
+			{
+				isUserExist = true;
+			}
             list1.push(otherData[otherRoomCode]);
         }
-        list1.push(data);
+        data.JoinDate = new Date();
+		if(!isUserExist)
+		{
+			list1.push(data);
+		}
         list[data.RoomId] = (list1);
         console.log(list);
         socket.broadcast.to(data.RoomId).emit("newUserJoin",data);
@@ -84,6 +94,28 @@ io.on('connection',function(socket)
     {
         socket.broadcast.to(data.RoomId).emit("ShowAllPoint",{Show:"yes"});
     });
+	socket.on('ClearPoint',function(data)
+    {
+		AllUser=list[data.RoomId];
+        var i=0;
+        
+        // for (let index = 0; index < AllUser.length; index++) {
+        //     if(AllUser[index] == data.Name)
+        //     {
+        //         AllUser[index].Point = data.Point;
+        //     }
+        // }
+        for (const key in AllUser) {
+            
+                 AllUser[key].Point = 0;
+             
+        }
+        //console.log(AllUser);
+        list[data.RoomId] = AllUser;
+        console.log(list);
+        
+        socket.broadcast.to(data.RoomId).emit("GetAllUser",list[data.RoomId]);
+    });
     socket.on('SendArtifactNumber',function(data)
     {
         socket.broadcast.to(data.RoomId).emit("BroadcastArtifactNumber",{Number:data.Number});
@@ -92,4 +124,36 @@ io.on('connection',function(socket)
 
 server.listen(port);
 
+setInterval(()=>{
+    Despose();
+},1000)
+
+function Despose()
+{
+    for (const [key, value] of Object.entries(list)) {
+        list[key].forEach(element => {
+            //console.log(element);
+            if(element.Admin == 1)
+            {   
+                var dateNow =new Date();
+                var date  = new Date(element.JoinDate);
+                var dateDiff = dateNow - date;
+                var hh = Math.floor(dateDiff / 1000 / 60 / 60);
+                
+                // console.log(hh)
+                // var mm = Math.floor(dateDiff / 1000 / 60);
+                // console.log(mm)
+                // dateDiff -= mm * 1000 * 60;
+                // console.log(dateDiff)
+                //var ss = Math.floor(dateDiff / 1000);
+                // console.log(ss)
+                // dateDiff -= ss * 1000;
+                if(hh>3)
+                {
+                    delete list[key];
+                }
+            }
+        });
+    }
+}
 console.log("Server running at http://localhost:%d", port);
